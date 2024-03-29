@@ -2,7 +2,7 @@
   "name": "coin-watch-real-time",
   "displayName": "coin-watch-real-time",
   "description": "see coin price real time",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "BlackBerry009",
   "icon": "resources/logo.png",
   "repository": {

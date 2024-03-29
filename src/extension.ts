@@ -3,6 +3,27 @@
 import * as vscode from 'vscode';
 import { App } from './app';
 
+function installTips(context: vscode.ExtensionContext) {
+  const currentVersion = vscode.extensions.getExtension(
+    'blackberry009.coin-watch-real-time'
+  )?.packageJSON?.version;
+  let storedVersion = context.globalState.get('extensionVersion');
+  if (!storedVersion || storedVersion !== currentVersion) {
+    vscode.window
+      .showInformationMessage(
+        'welcome to use this plugin , please reload window to use!!!',
+        'reload'
+      )
+      .then((choice) => {
+        if (choice === 'reload') {
+          vscode.commands.executeCommand('workbench.action.reloadWindow');
+        }
+      });
+
+    context.globalState.update('extensionVersion', currentVersion);
+  }
+}
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -27,22 +48,8 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disposable);
-  // 检查是否是首次安装插件
-  let isFirstInstall = context.globalState.get('isFirstInstall', true);
-  if (isFirstInstall) {
-    vscode.window
-      .showInformationMessage(
-        'welcome to use this plugin , please reload window to use!!!',
-        'reload'
-      )
-      .then((choice) => {
-        if (choice === 'reload') {
-          vscode.commands.executeCommand('workbench.action.reloadWindow');
-        }
-      });
 
-    context.globalState.update('isFirstInstall', false);
-  }
+  installTips(context);
   new App(context);
 }
 
