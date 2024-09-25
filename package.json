@@ -2,7 +2,7 @@
   "name": "coin-watch-real-time",
   "displayName": "coin-watch-real-time",
   "description": "see coin price real time",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "BlackBerry009",
   "icon": "resources/logo.png",
   "repository": {
@@ -40,8 +40,7 @@
           },
           "default": [
             "btc",
-            "eth",
-            "wld"
+            "eth"
           ],
           "description": "only show your favourite coin list"
         },
@@ -99,16 +98,18 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "bumpp": "bumpp"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
-    "@types/vscode": "^1.87.0",
+    "@types/vscode": "^1.93.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "@vscode/test-cli": "^0.0.6",
     "@vscode/test-electron": "^2.3.9",
+    "bumpp": "^9.5.2",
     "eslint": "^8.56.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
@@ -116,6 +117,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "axios": "^1.6.8"
+    "axios": "^1.6.8",
+    "reactive-vscode": "^0.2.3"
   }
 }
