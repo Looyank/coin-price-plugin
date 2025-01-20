@@ -6,7 +6,7 @@ show all coin price real time
 
 ## how to use
 
-muse open your vpn!!!! otherwise you can't get the data.
+**muse open your vpn!!!! otherwise you can't get the data.**
 
 ### coin-favourite-list
 
