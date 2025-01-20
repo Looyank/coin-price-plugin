@@ -27,9 +27,12 @@ export class App {
    * request timeout(ms)
    */
   private pollingTime = 2500;
+  private treeProvider: CoinTreeProvider | undefined;
+
   constructor(context: vscode.ExtensionContext) {
     this.timer = null;
     this.initialValue();
+    this.configChange();
     context.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration(() => this.configChange())
     );
@@ -56,13 +59,20 @@ export class App {
 
   public async setActivityBar(data: any) {
     const coinData = this.formatCoinData(data);
-    let provider = new CoinTreeProvider(coinData);
-    vscode.window.registerTreeDataProvider('coin', provider);
+
+    if (!this.treeProvider) {
+      // 首次创建 provider
+      this.treeProvider = new CoinTreeProvider(coinData);
+      vscode.window.registerTreeDataProvider('coin', this.treeProvider);
+    } else {
+      // 更新现有 provider 的数据
+      this.treeProvider.updateData(coinData);
+    }
   }
 
   public formatCoinData(data: any[]) {
     const coinListObj: Record<string, CoinType> = {};
-    const timezone = getConfigTimezone()
+    const timezone = getConfigTimezone();
     data.map((item: any) => {
       const { instId } = item;
       // btc-usdt-swap

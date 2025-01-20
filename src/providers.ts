@@ -23,8 +23,16 @@ class CoinItem extends vscode.TreeItem {
 }
 
 export class CoinTreeProvider implements vscode.TreeDataProvider<CoinItem> {
+  private _onDidChangeTreeData: vscode.EventEmitter<CoinItem | undefined | null | void> = new vscode.EventEmitter<CoinItem | undefined | null | void>();
+  readonly onDidChangeTreeData: vscode.Event<CoinItem | undefined | null | void> = this._onDidChangeTreeData.event;
+
   constructor(private data: Record<string, CoinType>) {
     this.data = data;
+  }
+
+  public updateData(newData: Record<string, CoinType>) {
+    this.data = newData;
+    this._onDidChangeTreeData.fire();
   }
 
   getChildren(
